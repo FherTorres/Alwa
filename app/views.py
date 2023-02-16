@@ -20,12 +20,16 @@ import zipfile
 import requests
 
 
-dspace_ip = "192.168.1.64"
-painal_ip = "192.168.1.70"
 
-painal_url = "http://192.168.1.70:20500/"
-dspace_url = "http://"+dspace_ip+":8080/server/api/"
-dspace_url_v6 = "http://"+dspace_ip+":8080/rest/"
+app.config.update(
+    DSPACE_IP="192.168.1.64",
+    PAINAL_IP="192.168.1.68"
+)
+
+
+painal_url = "http://"+app.config['PAINAL_IP']+":20500/"
+dspace_url = "http://"+app.config['DSPACE_IP']+":8080/server/api/"
+dspace_url_v6 = "http://"+app.config['DSPACE_IP']+":8080/rest/"
 create_item_endpoint = "core/items?owningCollection="
 login_endpoint = "authn/login"
 status_endpoint = "authn/status"
@@ -478,7 +482,9 @@ def user_register():
     response = response.json()
     print(response)
     print(code)
-    return json.dumps(response['data']), 200, {'ContentType':'application/json'}
+    if(code == 201):
+        return json.dumps(response['data']), 200, {'ContentType':'application/json'}
+    return json.dumps(response['data']), 400, {'ContentType':'application/json'}
 
 
 def get_painal_organizations():

@@ -145,6 +145,7 @@
                                 toastr.error(res['message']);
                             } else {
                                 toastr.success(res['message']);
+                                window.location.href = location.href.split("registro")[0]
                             }
 
                         } else {
