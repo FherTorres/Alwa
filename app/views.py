@@ -1,7 +1,7 @@
 from typing import List, Dict
-from flask_mysqldb import MySQL
+#from flask_mysqldb import MySQL
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-import mysql.connector
+#import mysql.connector
 import json
 import os
 import base64
