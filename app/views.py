@@ -491,7 +491,11 @@ def get_painal_organizations():
     url = painal_url+"auth/v1/view/hierarchy/all"
     payload={}
     headers = {}
-    response = requests.request("GET", url, headers=headers, data=payload).json()
+    try:
+        #response = requests.request("GET", url, headers=headers, data=payload).json()
+        response = {'data':""}
+    except:
+        response = {'data':""}
     print(response)
     return response['data']
 
