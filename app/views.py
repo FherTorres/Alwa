@@ -36,12 +36,12 @@ status_endpoint = "authn/status"
 user="test@test.edu"
 password="admin"
 
-app.config['SECRET_KEY']="catalogos"
-app.config['MYSQL_HOST'] = 'db'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'catalogos'
-db = MySQL(app)
+#app.config['SECRET_KEY']="catalogos"
+#app.config['MYSQL_HOST'] = 'db'
+#app.config['MYSQL_USER'] = 'root'
+#app.config['MYSQL_PASSWORD'] = 'root'
+#app.config['MYSQL_DB'] = 'catalogos'
+#db = MySQL(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
