@@ -1,0 +1,43 @@
+    #card_body {
+        height: 430px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    #scaled-frame {
+        width: 2200px;
+        height: 1200px;
+        border: 0px;
+    }
+
+    #scaled-frame {
+        zoom: 0.4;
+        -moz-transform: scale(0.4);
+        -moz-transform-origin: 0 0;
+        -o-transform: scale(0.4);
+        -o-transform-origin: 0 0;
+        -webkit-transform: scale(0.4);
+        -webkit-transform-origin: 0 0;
+    }
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        #scaled-frame {
+            zoom: 1;
+        }
+    }
+
+    .mfp-iframe-holder .mfp-content {
+        line-height: 0;
+        width: 200%;
+        height: 200%;
+        max-width: 1400px;
+        max-height: 1000px;
+    }
+
+    .carousel-control-prev-icon {
+        filter: invert(1);
+    }
+
+    .carousel-control-next-icon {
+        filter: invert(1);
+    }

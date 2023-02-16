@@ -1,0 +1,42 @@
+<nav class="navbar"> <!-- LOGO -->
+    <div class="logo"><img width="80px" src="{{ url_for('static', filename='alwa/assets/media/image/logo-alwa.png') }}"
+            alt="image"></div> <!-- NAVIGATION MENU -->
+    <ul class="nav-links"> <!-- USING CHECKBOX HACK --><!-- NAVIGATION MENUS -->
+        <div class="menu">
+            <li><a href="/">Home</a></li>
+            <li class="services"> <a href="/">Alwa <i class="arrow down"></i></a> <!-- DROPDOWN MENU -->
+                <ul class="dropdown">
+                    <li><a href="/">Estrategia </a></li>
+                    <li><a href="/">Paradigmas</a></li>
+                    <li><a href="/">Prácticas</a></li>
+                    <li><a href="/">Radar tecnológico</a></li>
+                    <li><a href="/">Redarquía</a></li>
+                    <li><a href="/">Alphas</a></li>
+                </ul>
+            </li>
+            <li class="services"> <a href="/">Herramientas <i class="arrow down"></i></a> <!-- DROPDOWN MENU -->
+                <ul class="dropdown">
+                    <li><a href="/">Sistemas </a></li>
+                    <li><a href="/">Ecosistemas</a></li>
+                    <li><a href="/">Componentes</a></li>
+                </ul>
+            </li>
+            <li class="services"> <a href="/">Lineamientos <i class="arrow down"></i></a> <!-- DROPDOWN MENU -->
+                <ul class="dropdown">
+                    <li><a href="/">Git </a></li>
+                    <li><a href="/">Bases de datos</a></li>
+                    <li><a href="/">Java</a></li>
+                    <li><a href="/">Javascript</a></li>
+                    <li><a href="/">Front-end</a></li>
+                </ul>
+            </li>
+            <li class="services"> <a href="/">Talento <i class="arrow down"></i></a> <!-- DROPDOWN MENU -->
+                <ul class="dropdown">
+                    <li><a href="/">Top Ten </a></li>
+                    <li><a href="/">Equipos</a></li>
+                </ul>
+            </li>
+            <li><a href="/logout">Cerrar Sesion</a></li>
+        </div>
+    </ul>
+</nav>

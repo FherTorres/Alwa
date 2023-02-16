@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='/alwa/assets/bootstrap-3.4.1-dist/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='alwa/assets/css/custom.css') }}" />
+    
+    
+    <title>Document</title>
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    <h1 style="text-align:center">{{community_name}} - {{collection_name}}</h1>
+    <table class="center">
+        <thead>
+            <tr style="text-align: right;">
+              <th>UUID</th>
+              <th>Name</th>
+              <th>Logo</th>
+              <th>Handle</th>
+              <th>Type</th>
+              <th>Expand</th>
+              <th></th>
+            </tr>
+          </thead>
+        <tbody>
+            {% for user in data %}
+            <tr>
+            <td>{{ user['uuid'] }}</td>
+            <td>{{ user['name'] }}</td>
+            <td>{{ user['logo'] }}</td>
+            <td>{{ user['handle'] }}</td>
+            <td>{{ user['type'] }}</td>
+            <td>{{ user['expand'] }}</td>
+            <td><a href="" class='btn btn-primary'>Details</a></td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
+
+
+<style>
+    table,
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    .center {
+  margin-left: auto;
+  margin-right: auto;
+}
+  </style>
+

@@ -1,0 +1,12 @@
+Flask
+Flask-WTF
+uWSGI
+Werkzeug
+mysql-connector
+typing
+pymongo
+flask_mongoengine
+flask-mysqldb
+flask-login
+email_validator
+requests

@@ -1,0 +1,23 @@
+{
+  "name": "Muyal",
+  "handle": "123456789/60631",
+  "metadata": {
+    "dc.title": [
+      {
+        "value": "Muyal",
+        "language": null,
+        "authority": null,
+        "confidence": -1
+      }
+    ],
+    "dc.description": [
+      {
+        "value": "An example description",
+        "language": "en",
+        "authority": null,
+        "confidence": -1
+      }
+    ]
+  },
+  "type": "community"
+}
