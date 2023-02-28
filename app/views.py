@@ -22,8 +22,9 @@ import requests
 
 
 app.config.update(
-    DSPACE_IP="192.168.1.64",
-    PAINAL_IP="192.168.1.68"
+    DSPACE_IP="192.168.1.71",
+    PAINAL_IP="192.168.1.73",
+    SECRET_KEY="Alwa"
 )
 
 
@@ -64,7 +65,7 @@ class User(UserMixin):
 
 class ModelUser():
     @classmethod
-    def login(self, db, username, password, cookie):
+    def login(self, username, password, cookie):
         try:
             #cursor = db.connection.cursor()
             #sql = """SELECT id_user, username, password, first_name, second_name, user_type FROM users WHERE username = '{}'""".format(username)
@@ -90,27 +91,28 @@ class ModelUser():
             
 
     @classmethod
-    def get_by_id(self, db, id):
+    def get_by_id(self, id):
         try:
-            cursor = db.connection.cursor()
-            sql = "SELECT id_user, username, first_name, second_name, user_type FROM users WHERE id_user = {}".format(id)
-            cursor.execute(sql)
-            row = cursor.fetchone()
-            if row != None:
-                return User(row[0], row[1], None, row[2], row[3], row[4])
-            else:
-                return None
+            #cursor = db.connection.cursor()
+            #sql = "SELECT id_user, username, first_name, second_name, user_type FROM users WHERE id_user = {}".format(id)
+            #cursor.execute(sql)
+            #row = cursor.fetchone()
+            #if row != None:
+            return User("1", "username", "password", "First_name", "Second_name", "cookie")
+            #else:
+                #return None
         except Exception as ex:
             raise Exception(ex)
         
         finally:
-            cursor.close()
+            print("SE CIERRA CURSOR")
+            #cursor.close()
         
 
 
 @login_manager.user_loader
 def load_user(id_user):
-    return ModelUser.get_by_id(db, id_user)
+    return ModelUser.get_by_id(id_user)
 
 def conexion_db():
     conn = mysql.connector.connect(
@@ -210,14 +212,12 @@ def view_login_dspace(user,password):
     code = response.status_code 
     if  code == 200:
         cookie_dict = dict(response.cookies)
-        session['cookie'] = cookie_dict['JSESSIONID']
-        user = ModelUser.login(db,user, password, cookie_dict['JSESSIONID'])
-        login_user(user)
-        return 200  
+        return {'code':200, 'data':{'jsessionid':cookie_dict['JSESSIONID']}}  
     elif code == 401:
-        return None
+        return {'code':401, 'data':{}}
 
 def login_painal(user,password):
+    print("LOGIN PAINAL!!")
     url = painal_url+"auth/v1/users/login"
 
     payload = json.dumps({
@@ -229,14 +229,12 @@ def login_painal(user,password):
     }
     
     response = requests.request("POST", url, headers=headers, data=payload)
+    print(response)
     print(response.text)
     if(response.status_code==200):
         response = response.json()
-        session['painal_token_user'] = response['data']['tokenuser']
-        session['painal_api_key'] = response['data']['apikey']
-        session['painal_access_token'] = response['data']['access_token']
-        return 200
-    return None
+        return {'code':200, 'data':{'painal_token_user':response['data']['tokenuser'], 'painal_api_key':response['data']['apikey'], 'painal_access_token':response['data']['access_token']}}
+    return {'code':400}
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -244,13 +242,20 @@ def login():
     password = request.form['password']
     user = request.form['user']
     print(password,user)
-    dspace_login_code = view_login_dspace(user,password)
+    dspace_login_response = view_login_dspace(user,password)
     #dspace_login_code = 200
-    painal_login_code = login_painal(user,password)
-
-    if(dspace_login_code == 200 and painal_login_code == 200):
-        print(session)
+    painal_login_response = login_painal(user,password)
+    
+    if(dspace_login_response['code'] == 200 and painal_login_response['code'] == 200):
+        session['cookie'] = dspace_login_response['data']['jsessionid']
+        session['painal_token_user'] = painal_login_response['data']['painal_token_user']
+        session['painal_api_key'] = painal_login_response['data']['painal_api_key']
+        session['painal_access_token'] = painal_login_response['data']['painal_access_token']
+        user = ModelUser.login(user, password, session['cookie'])
+        login_user(user)
         return redirect(url_for('index'))
+    else:
+        return redirect(url_for('home'))
 
 
 
@@ -266,7 +271,7 @@ def dashboard():
 
 
 
-    url = "http://192.168.1.64:8080/rest/communities"
+    url = dspace_url_v6+"communities"
     payload={}
     headers = {
         'Accept': 'application/json',
@@ -281,9 +286,8 @@ def dashboard():
 
 
 @app.route('/logout')
-@login_required
 def logout():
-    url = "http://192.168.1.64:8080/rest/logout"
+    url = dspace_url_v6+"logout"
     payload={}
     headers = {
         'Cookie': 'JSESSIONID='+session['cookie']
@@ -315,7 +319,7 @@ def digital_resources():
 def view_collections():
     uuid = request.args.get('uuid')
     name = request.args.get('name')
-    url = "http://192.168.1.64:8080/rest/communities/"+uuid+"/collections"
+    url = dspace_url_v6+"communities/"+uuid+"/collections"
     payload={}
     headers = {
         'Accept': 'application/json',
@@ -332,7 +336,7 @@ def view_items():
     uuid = request.args.get('uuid')
     community_name = request.args.get('communityName')
     collection_name = request.args.get('collectionName')
-    url = "http://192.168.1.64:8080/rest/collections/"+uuid+"/items"
+    url = dspace_url_v6+"collections/"+uuid+"/items"
     payload={}
     headers = {
         'Accept': 'application/json',
@@ -492,8 +496,8 @@ def get_painal_organizations():
     payload={}
     headers = {}
     try:
-        #response = requests.request("GET", url, headers=headers, data=payload).json()
-        response = {'data':""}
+        response = requests.request("GET", url, headers=headers, data=payload).json()
+        #response = {'data':""}
     except:
         response = {'data':""}
     print(response)
