@@ -192,7 +192,7 @@ def home():
     return render_template("login.html")
     
 
-def view_login_dspace(user,password):
+def login_dspacev6(user,password):
     print("LOGIN DSPACE!!")
     user = "test@test.edu"
     password = "admin"
@@ -242,7 +242,7 @@ def login():
     password = request.form['password']
     user = request.form['user']
     print(password,user)
-    dspace_login_response = view_login_dspace(user,password)
+    dspace_login_response = login_dspacev6(user,password)
     #dspace_login_code = 200
     painal_login_response = login_painal(user,password)
     
