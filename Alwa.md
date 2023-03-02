@@ -17,12 +17,12 @@ docker-compose -p d7 -f docker/docker-compose-rest.yml up
 docker-compose -p d7 -f docker/cli.yml run --rm dspace-cli create-administrator -e test@test.edu -f admin -l user -p admin -c en
 ```
 
-## 2- Instalación de SkyCDS
+## 2- Instalación de Painal
 
-- Descargar proyecto SkyCDS
-- Instalar SkyCDS con docker-compose:
+- Descargar proyecto Painal
+- Instalar Painal con docker-compose:
 ```sh
-cd SkyCDS
+cd Painal
 docker-compose up
 ```
 
